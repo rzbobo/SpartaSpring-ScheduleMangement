@@ -2,13 +2,13 @@ package com.example.schedulemanagement.repository;
 
 import com.example.schedulemanagement.dto.ScheduleResponseDto;
 import com.example.schedulemanagement.entity.Schedule;
-import org.springframework.http.HttpStatus;
+import com.example.schedulemanagement.entity.User;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.sql.*;
 import java.sql.ResultSet;
@@ -24,7 +24,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override // 생성
-    public ScheduleResponseDto saveSchedule(Schedule schedule) {
+    public ScheduleResponseDto saveSchedule(Schedule schedule, User userName) {
         // INSERT Query를 직접 작성하지 않아도 된다.
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("scheduleId");
