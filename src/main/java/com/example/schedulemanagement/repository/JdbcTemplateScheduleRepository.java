@@ -44,10 +44,10 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public List<ScheduleResponseDto> findAllSchedules() {
-        return jdbcTemplate.query("select * from schedule", scheduleMapper());
+        return jdbcTemplate.query("select * from schedule", scheduleRowMapper());
     }
 
-    private RowMapper<ScheduleResponseDto> scheduleMapper() {
+    private RowMapper<ScheduleResponseDto> scheduleRowMapper() {
         return new RowMapper<ScheduleResponseDto>() {
             @Override
             public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -66,41 +66,44 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     // 사용자 이름기반 조회
     @Override
     public Optional<Schedule> findScheduleByuserName(String userName) {
-        List<Schedule> result = jdbcTemplate.query("select * from schedule where username = ?", memoRowMapperV2(), id);
+        String sql = "SELECT schedule.scheduleId, schedule.title, schedule.contents, schedule.createDate, schedule.modifyDate " +
+                "FROM schedule" +
+                "JOIN user u ON s.userId = u.userId " +
+                "WHERE u.username = ? OR s.modifyDate = ?";
+
+        List<Schedule> result = jdbcTemplate.query(sql, scheduleRowMapperV2(), userName);
         return Optional.empty();
     }
 
-    // 수정일 기반 조회
+    private RowMapper<Schedule> scheduleRowMapperV2() {
+        return null;
+    }
+
     @Override
     public Optional<Schedule> findScheduleBymodifyDate(Date modifyDate) {
         return Optional.empty();
     }
 
-    // 사용자 이름 및 수정일 호환 조회
     @Override
     public Optional<Schedule> findScheduleByuserNameAndmodifyDate(String userName, Date modifyDate) {
         return Optional.empty();
     }
 
-    // 선택한 일정 상세 조회
     @Override
     public Optional<Schedule> findScheduleById(Long scheduleId) {
         return Optional.empty();
     }
 
-    // 선택한 일정 수정하기
     @Override
     public int updateSchedule(Long id, String title, String contents) {
         return 0;
     }
 
-    // 선택한 일정 제목 수정하기
     @Override
     public int updateTitle(Long id, String title) {
         return 0;
     }
 
-    // 선택한 일정 삭제
     @Override
     public int deleteSchedule(Long id) {
         return 0;
@@ -108,9 +111,6 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public Schedule findMemoByIdOrElseThrow(Long ScheduleId) {
-        List<Schedule> result = jdbcTemplate.query("select * from memo where id = ?", memoRowMapperV2(), id);
-
-        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
+        return null;
     }
-
 }

@@ -1,0 +1,21 @@
+use sparta;
+
+
+CREATE TABLE USER(
+                        userId BIGINT NOT NULL AUTO_INCREMENT,
+                        username varchar(50)  NOT NULL,
+                        password varchar(255) NOT NULL,
+                        primary key (userId)
+);
+CREATE TABLE schedule(
+
+    scheduleId BIGINT          NOT NULL AUTO_INCREMENT,
+    userId   BIGINT NOT NULL,
+    title      varchar(255) NOT NULL,
+    contents   varchar(255) NOT NULL,
+    createDate TIMESTAMP    NOT NULL default CURRENT_TIMESTAMP,
+    modifyDate TIMESTAMP    NOT NULL default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (scheduleId),
+    FOREIGN KEY (userId) REFERENCES user (userId)
+);
+
