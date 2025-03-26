@@ -1,11 +1,11 @@
-package com.example.schedulemanagement.entity;
+package com.example.schedulemanagement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class User {
+public class UserDto {
     private String userName;
     private String password;
 }
