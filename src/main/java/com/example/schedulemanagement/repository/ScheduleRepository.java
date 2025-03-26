@@ -14,18 +14,12 @@ public interface ScheduleRepository {
 
     List<ScheduleResponseDto> findAllSchedules();
 
-    // 사용자 이름과 수정일 기반 검색 기능
-    Optional<Schedule> findScheduleByuserName(String userName);
-    Optional<Schedule> findScheduleBymodifyDate(Date modifyDate);
-    Optional<Schedule> findScheduleByuserNameAndmodifyDate(String username,Date modifyDate);
-    Optional<Schedule> findScheduleById(Long scheduleId);
+    // 사용자 이름과 수정일 기반 검색 기능 [OR]
+    Optional<ScheduleResponseDto> findScheduleByuserNameOrModifyDate(String username,Date modifyDate);
+    // 사용자 이름과 수정일 기반 검색 기능 [AND]
+    Optional<ScheduleResponseDto> findScheduleByuserNameAndmodifyDate(String username,Date modifyDate);
 
-    int updateSchedule(Long id, String title, String contents);
+    int updateSchedule(Long scheduleId, String userName, String contents);
 
-    int updateTitle(Long id, String title);
-
-    int deleteSchedule(Long id);
-
-    Schedule findMemoByIdOrElseThrow(Long ScheduleId);
-
+    int deleteSchedule(Long scheduleId);
 }

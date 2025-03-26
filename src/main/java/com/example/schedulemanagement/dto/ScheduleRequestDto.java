@@ -8,9 +8,10 @@ import java.util.Date;
 public class ScheduleRequestDto {
 
     private long scheduleId;
+    private long userId;
+    private String userName;
     private String title;
     private String contents;
     private Date createDate;
     private Date modifyDate;
-
 }

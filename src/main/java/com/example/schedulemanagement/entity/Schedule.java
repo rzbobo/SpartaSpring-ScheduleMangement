@@ -17,12 +17,13 @@ public class Schedule {
 
 
     public Schedule(String title, String contents, Date createDate, Date modifyDate) {
-
         this.title = title;
         this.contents = contents;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
     }
+
+
 
     public void update(String title, String contents, Date modifyDate) {
         this.title = title;
